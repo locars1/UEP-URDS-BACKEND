@@ -8,9 +8,16 @@ import authRoutes from "./src/routes/authRoutes.js"
 import userRoutes from "./src/routes/userRoutes.js";
 import roleRoutes from "./src/routes/roleRoutes.js";
 import collegeRoutes from "./src/routes/collegeRoutes.js";
+import announcementRoutes from "./src/routes/announcementRoutes.js";
+import researchProposalRoutes from "./src/routes/researchProposalRoutes.js";
+import travelRoutes from "./src/routes/travelRoutes.js";
+import itemRoutes from "./src/routes/itemRoutes.js";
+import mooeTravelRoutes from "./src/routes/mooeTravelRoutes.js";
 
 // Import Middleware
 import { authenticate } from "./src/middleware/authMiddleware.js";
+
+
 
 dotenv.config();
 
@@ -30,6 +37,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", authenticate, userRoutes); // protected routes = app.use("/api/users", authenticate, userRoutes)
 app.use("/api/roles", authenticate, roleRoutes); // protected routes
 app.use("/api/colleges", authenticate, collegeRoutes); // protected routes
+
+app.use("/api/announcements", announcementRoutes);
+app.use("/api/research-proposals", researchProposalRoutes);
+app.use("/api/travel", travelRoutes);
+app.use("/api/items", itemRoutes);
+app.use("/api/mooe-travel", mooeTravelRoutes);
 
 // 404 Handler
 app.use((req, res, next) => {
