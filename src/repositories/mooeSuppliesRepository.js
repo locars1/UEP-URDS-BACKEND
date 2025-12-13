@@ -1,22 +1,23 @@
-// src/repositories/mooeTravelRepository.js
+// src/repositories/mooeSuppliesRepository.js
 import { db } from "../config/db.js";
 
 export default {
     // CREATE
-    createMooeTravel(data) {
+    createMooeSupply(data) {
         const sql = `
-            INSERT INTO mooe_travel
-            (budget_id, travel_date, places_to_be_visited, purpose_of_travel, mode_of_transport, estimated_cost, year_num, year_amount, year_total)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO mooe_supplies 
+            (budget_id, supply_date, unit, item_description, purpose, quantity, unit_cost, year, year_amount, year_total)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         const values = [
             data.budget_id,
-            data.travel_date,
-            data.places_to_be_visited,
-            data.purpose_of_travel,
-            data.mode_of_transport,
-            data.estimated_cost,
-            data.year_num,
+            data.supply_date,
+            data.unit,
+            data.item_description,
+            data.purpose,
+            data.quantity,
+            data.unit_cost,
+            data.year,
             data.year_amount,
             data.year_total
         ];
@@ -29,8 +30,8 @@ export default {
     },
 
     // GET ALL
-    getAllMooeTravel() {
-        const sql = "SELECT * FROM mooe_travel ORDER BY mooe_travel_id DESC";
+    getAllMooeSupplies() {
+        const sql = "SELECT * FROM mooe_supplies ORDER BY mooe_supply_id DESC";
         return new Promise((resolve, reject) => {
             db.query(sql)
                 .then(([rows]) => resolve(rows))
@@ -39,8 +40,8 @@ export default {
     },
 
     // GET ONE
-    getMooeTravelById(id) {
-        const sql = "SELECT * FROM mooe_travel WHERE mooe_travel_id = ?";
+    getMooeSupplyById(id) {
+        const sql = "SELECT * FROM mooe_supplies WHERE mooe_supply_id = ?";
         return new Promise((resolve, reject) => {
             db.query(sql, [id])
                 .then(([rows]) => resolve(rows[0]))
@@ -49,21 +50,22 @@ export default {
     },
 
     // UPDATE
-    updateMooeTravel(id, data) {
+    updateMooeSupply(id, data) {
         const sql = `
-            UPDATE mooe_travel SET
-                budget_id = ?, travel_date = ?, places_to_be_visited = ?, purpose_of_travel = ?, 
-                mode_of_transport = ?, estimated_cost = ?, year_num = ?, year_amount = ?, year_total = ?
-            WHERE mooe_travel_id = ?
+            UPDATE mooe_supplies SET
+                budget_id = ?, supply_date = ?, unit = ?, item_description = ?, 
+                purpose = ?, quantity = ?, unit_cost = ?, year = ?, year_amount = ?, year_total = ?
+            WHERE mooe_supply_id = ?
         `;
         const values = [
             data.budget_id,
-            data.travel_date,
-            data.places_to_be_visited,
-            data.purpose_of_travel,
-            data.mode_of_transport,
-            data.estimated_cost,
-            data.year_num,
+            data.supply_date,
+            data.unit,
+            data.item_description,
+            data.purpose,
+            data.quantity,
+            data.unit_cost,
+            data.year,
             data.year_amount,
             data.year_total,
             id
@@ -77,8 +79,8 @@ export default {
     },
 
     // DELETE
-    deleteMooeTravel(id) {
-        const sql = "DELETE FROM mooe_travel WHERE mooe_travel_id = ?";
+    deleteMooeSupply(id) {
+        const sql = "DELETE FROM mooe_supplies WHERE mooe_supply_id = ?";
         return new Promise((resolve, reject) => {
             db.query(sql, [id])
                 .then(([result]) => resolve(result))

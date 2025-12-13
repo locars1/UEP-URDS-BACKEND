@@ -1,58 +1,47 @@
 // src/controllers/mooeTravelController.js
 import MooeTravelService from "../services/mooeTravelService.js";
 
-const MooeTravelController = {
-    createMooeTravel: async (req, res) => {
-        console.log("📥 RECEIVED BODY:", req.body);
-        try {
-            const newId = await MooeTravelService.createMooeTravel(req.body);
-            res.status(201).json({ message: "MOOE Travel created successfully", mooe_travel_id: newId });
-        } catch (error) {
-            console.error("🔥 CREATE MOOE TRAVEL ERROR:", error);
-            res.status(500).json({ error: "Failed to create MOOE Travel" });
-        }
-    },
-
-    getAllMooeTravel: async (req, res) => {
-        try {
-            const entries = await MooeTravelService.getAllMooeTravel();
-            res.json(entries);
-        } catch (error) {
-            console.error("🔥 FETCH MOOE TRAVEL ERROR:", error);
-            res.status(500).json({ error: "Failed to fetch MOOE Travel entries" });
-        }
-    },
-
-    getMooeTravelById: async (req, res) => {
-        try {
-            const entry = await MooeTravelService.getMooeTravelById(req.params.id);
-            if (!entry) return res.status(404).json({ message: "MOOE Travel entry not found" });
-            res.json(entry);
-        } catch (error) {
-            console.error("🔥 FETCH MOOE TRAVEL BY ID ERROR:", error);
-            res.status(500).json({ error: "Failed to fetch MOOE Travel entry" });
-        }
-    },
-
-    updateMooeTravel: async (req, res) => {
-        try {
-            await MooeTravelService.updateMooeTravel(req.params.id, req.body);
-            res.json({ message: "MOOE Travel updated successfully" });
-        } catch (error) {
-            console.error("🔥 UPDATE MOOE TRAVEL ERROR:", error);
-            res.status(500).json({ error: "Failed to update MOOE Travel" });
-        }
-    },
-
-    deleteMooeTravel: async (req, res) => {
-        try {
-            await MooeTravelService.deleteMooeTravel(req.params.id);
-            res.json({ message: "MOOE Travel deleted successfully" });
-        } catch (error) {
-            console.error("🔥 DELETE MOOE TRAVEL ERROR:", error);
-            res.status(500).json({ error: "Failed to delete MOOE Travel" });
-        }
+export const create = async (req, res) => {
+    try {
+        const result = await MooeTravelService.create(req.body);
+        res.json({ message: "MOOE Travel created successfully", result });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 };
 
-export default MooeTravelController;
+export const getAll = async (req, res) => {
+    try {
+        const result = await MooeTravelService.getAll();
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+export const getById = async (req, res) => {
+    try {
+        const result = await MooeTravelService.getById(req.params.id);
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+export const update = async (req, res) => {
+    try {
+        const result = await MooeTravelService.update(req.params.id, req.body);
+        res.json({ message: "MOOE Travel updated successfully", result });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+export const remove = async (req, res) => {
+    try {
+        const result = await MooeTravelService.delete(req.params.id);
+        res.json({ message: "MOOE Travel deleted successfully", result });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};

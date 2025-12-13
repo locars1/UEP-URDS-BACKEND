@@ -10,9 +10,19 @@ import roleRoutes from "./src/routes/roleRoutes.js";
 import collegeRoutes from "./src/routes/collegeRoutes.js";
 import announcementRoutes from "./src/routes/announcementRoutes.js";
 import researchProposalRoutes from "./src/routes/researchProposalRoutes.js";
-import travelRoutes from "./src/routes/travelRoutes.js";
-import itemRoutes from "./src/routes/itemRoutes.js";
+import budgetSummaryRoutes from "./src/routes/budgetSummaryRoutes.js";
+import personalServicesRoutes from './src/routes/personalServicesRoutes.js';
 import mooeTravelRoutes from "./src/routes/mooeTravelRoutes.js";
+import mooeSuppliesRoutes from "./src/routes/mooeSuppliesRoutes.js";
+import mooeCommunicationsRoutes from "./src/routes/mooeCommunicationsRoutes.js";
+import mooeContractLaborRoutes from "./src/routes/mooeContractLaborRoutes.js";
+import mooeEquipmentOutlayRoutes from "./src/routes/mooeEquipmentOutlayRoutes.js";
+import workplanRoutes from "./src/routes/workplanRoutes.js";
+import workplanActivityRoutes from "./src/routes/workplanActivityRoutes.js";
+import workplanScheduleRoutes from "./src/routes/workplanScheduleRoutes.js";
+import submissionRoutes from "./src/routes/submissionRoutes.js";
+import submissionEvaluationRoutes from "./src/routes/submissionEvaluationRoutes.js";
+import approvalNotificationRoutes from "./src/routes/approvalNotificationRoutes.js";
 
 // Import Middleware
 import { authenticate } from "./src/middleware/authMiddleware.js";
@@ -39,10 +49,24 @@ app.use("/api/roles", authenticate, roleRoutes); // protected routes
 app.use("/api/colleges", authenticate, collegeRoutes); // protected routes
 
 app.use("/api/announcements", announcementRoutes);
-app.use("/api/research-proposals", researchProposalRoutes);
-app.use("/api/travel", travelRoutes);
-app.use("/api/items", itemRoutes);
+app.use("/api/research-proposal", researchProposalRoutes);
+app.use("/api/budget-summary", budgetSummaryRoutes);
 app.use("/api/mooe-travel", mooeTravelRoutes);
+app.use("/api/mooe-supplies", mooeSuppliesRoutes);
+app.use("/api/mooe-communications", mooeCommunicationsRoutes);
+app.use("/api/mooe-contract-labor", mooeContractLaborRoutes);
+app.use("/api/mooe-equipment-outlay", mooeEquipmentOutlayRoutes);
+app.use("/api/workplans", workplanRoutes);
+app.use("/api/workplan-activities", workplanActivityRoutes);
+app.use("/api/workplan-schedules", workplanScheduleRoutes);
+app.use("/api/submissions", submissionRoutes);
+app.use("/api/evaluations", submissionEvaluationRoutes);
+app.use("/api/approval-notifications", approvalNotificationRoutes);
+
+
+app.use('/api/personal-services', personalServicesRoutes);
+
+
 
 // 404 Handler
 app.use((req, res, next) => {

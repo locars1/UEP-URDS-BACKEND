@@ -1,25 +1,25 @@
-// src/services/researchProposalService.js
 import ResearchProposalRepository from "../repositories/researchProposalRepository.js";
 
 const ResearchProposalService = {
-    createProposal: async (data) => {
-        return await ResearchProposalRepository.createProposal(data);
+    
+    async create(data) {
+        return await ResearchProposalRepository.createResearchProposal(data);
     },
 
-    getAllProposals: async () => {
-        return await ResearchProposalRepository.getAllProposals();
+    async getAll() {
+        return await ResearchProposalRepository.getAllResearchProposals();  // FIXED
     },
 
-    getProposalById: async (id) => {
-        return await ResearchProposalRepository.getProposalById(id);
+    async getById(id) {
+        return await ResearchProposalRepository.getResearchProposalById(id);  // FIXED
     },
 
-    updateProposal: async (id, data) => {
-        return await ResearchProposalRepository.updateProposal(id, data);
+    async update(id, data) {
+        return await ResearchProposalRepository.updateResearchProposal(id, data); // FIXED
     },
 
-    deleteProposal: async (id) => {
-        return await ResearchProposalRepository.deleteProposal(id);
+    async delete(id) {
+        return await ResearchProposalRepository.deleteResearchProposal(id); // FIXED
     }
 };
 

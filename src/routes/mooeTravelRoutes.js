@@ -1,13 +1,13 @@
 // src/routes/mooeTravelRoutes.js
 import express from "express";
-import MooeTravelController from "../controllers/mooeTravelController.js";
+import * as MooeTravelController from "../controllers/mooeTravelController.js";
 
 const router = express.Router();
 
-router.post("/", MooeTravelController.createMooeTravel);
-router.get("/", MooeTravelController.getAllMooeTravel);
-router.get("/:id", MooeTravelController.getMooeTravelById);
-router.put("/:id", MooeTravelController.updateMooeTravel);
-router.delete("/:id", MooeTravelController.deleteMooeTravel);
+router.post("/", MooeTravelController.create);
+router.get("/", MooeTravelController.getAll);
+router.get("/:id", MooeTravelController.getById);
+router.put("/:id", MooeTravelController.update);
+router.delete("/:id", MooeTravelController.remove);
 
 export default router;

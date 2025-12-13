@@ -1,12 +1,20 @@
 // src/services/mooeTravelService.js
 import MooeTravelRepository from "../repositories/mooeTravelRepository.js";
 
-const MooeTravelService = {
-    createMooeTravel: async (data) => await MooeTravelRepository.createMooeTravel(data),
-    getAllMooeTravel: async () => await MooeTravelRepository.getAllMooeTravel(),
-    getMooeTravelById: async (id) => await MooeTravelRepository.getMooeTravelById(id),
-    updateMooeTravel: async (id, data) => await MooeTravelRepository.updateMooeTravel(id, data),
-    deleteMooeTravel: async (id) => await MooeTravelRepository.deleteMooeTravel(id)
+export default {
+    create(data) {
+        return MooeTravelRepository.createMooeTravel(data);
+    },
+    getAll() {
+        return MooeTravelRepository.getAllMooeTravel();
+    },
+    getById(id) {
+        return MooeTravelRepository.getMooeTravelById(id);
+    },
+    update(id, data) {
+        return MooeTravelRepository.updateMooeTravel(id, data);
+    },
+    delete(id) {
+        return MooeTravelRepository.deleteMooeTravel(id);
+    }
 };
-
-export default MooeTravelService;
