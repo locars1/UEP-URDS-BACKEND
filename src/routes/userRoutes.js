@@ -9,7 +9,7 @@ const router = express.Router();
 const adminRoles = ["URDS DIRECTOR", "COLLEGE DEAN"];
 
 
-router.post("/create", userController.create);
+router.post("/", userController.create);
 
 router.get(
   "/",
