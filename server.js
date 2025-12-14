@@ -62,8 +62,6 @@ app.use("/api/workplan-schedules", workplanScheduleRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/evaluations", submissionEvaluationRoutes);
 app.use("/api/approval-notifications", approvalNotificationRoutes);
-
-
 app.use('/api/personal-services', personalServicesRoutes);
 
 

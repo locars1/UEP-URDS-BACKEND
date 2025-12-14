@@ -3,7 +3,7 @@ import { db } from "../config/db.js";
 
 export const userRepository = {
   /* ---------------------------------------------------------
-      FIND USER BY EMAIL
+      FIND USER BY username
   --------------------------------------------------------- */
   async findByEmail(email) {
     const [rows] = await db.query(
@@ -11,7 +11,7 @@ export const userRepository = {
        FROM user u
        LEFT JOIN role r ON u.roleID = r.roleID
        LEFT JOIN college c ON u.collegeID = c.collegeID
-       WHERE u.email = ?`,
+       WHERE u.username = ?`,
       [email]
     );
     return rows[0];
@@ -22,7 +22,7 @@ export const userRepository = {
   --------------------------------------------------------- */
   async create(user) {
     const [result] = await db.query(
-      `INSERT INTO user (roleID, collegeID, fname, mname, lname, email, password)
+      `INSERT INTO user (roleID, collegeID, fname, mname, lname, username, password)
        VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [
         user.roleID,
@@ -30,7 +30,7 @@ export const userRepository = {
         user.fname,
         user.mname,
         user.lname,
-        user.email,
+        user.username,
         user.password
       ]
     );

@@ -7,10 +7,10 @@ export const userController = {
   --------------------------------------------------------- */
   async create(req, res) {
     try {
-      const { roleID, collegeID, fname, mname, lname, email, password, status } = req.body;
+      const { roleID, collegeID, fname, mname, lname, username, password, status } = req.body;
 
       // Basic validation
-      if (!roleID || !fname || !lname || !email || !password) {
+      if (!roleID || !fname || !lname || !username || !password) {
         return res.status(400).json({ message: "Missing required fields" });
       }
 
@@ -20,7 +20,7 @@ export const userController = {
         fname,
         mname: mname || "",
         lname,
-        email,
+        username,
         password,
         status: status || "active",
       });

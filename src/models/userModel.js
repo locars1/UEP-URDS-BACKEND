@@ -6,7 +6,7 @@ export class userModel {
     fname,
     mname,
     lname,
-    email,
+    username,
     password,
     status
   }) {
@@ -16,7 +16,7 @@ export class userModel {
     this.fname = fname;
     this.mname = mname;
     this.lname = lname;
-    this.email = email;
+    this.username = username;
     this.password = password;
     this.status = status;
   }

@@ -1,5 +1,5 @@
 // models/authModel.js
 export const authModel = {
-  email: "",
+  username: "",
   password: ""
 };
