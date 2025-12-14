@@ -99,7 +99,10 @@ export default {
     // GET ALL
     getAllSubmissions() {
         const sql = `
-            SELECT s.*, r.research_title, r.research_type
+            SELECT s.*,
+             r.research_title,
+              r.research_type,
+              r.leader
             FROM submission s
             JOIN research_proposal r ON s.research_id = r.research_id
             ORDER BY s.submission_id DESC
