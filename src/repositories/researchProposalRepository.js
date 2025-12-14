@@ -6,13 +6,14 @@ export default {
     createResearchProposal(data) {
         const sql = `
             INSERT INTO research_proposal 
-            (research_title, research_type, leader, members, location, duration, annual_budget, rationale, objectives, rrl, methodology, prepared_by, endorsed_by, recommending_approval) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            (research_title, research_type, leader,college, members, location, duration, annual_budget, rationale, objectives, rrl, methodology, prepared_by, endorsed_by, recommending_approval) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         const values = [
             data.research_title,
             data.research_type,
             data.leader,
+            data.college,
             data.members,
             data.location,
             data.duration,
@@ -59,7 +60,7 @@ export default {
     updateResearchProposal(id, data) {
         const sql = `
             UPDATE research_proposal SET
-                research_title = ?, research_type = ?, leader = ?, members = ?, 
+                research_title = ?, research_type = ?, leader = ?, college = ?, members = ?, 
                 location = ?, duration = ?, annual_budget = ?, rationale = ?, 
                 objectives = ?, rrl = ?, methodology = ?, prepared_by = ?, 
                 endorsed_by = ?, recommending_approval = ?
@@ -70,6 +71,7 @@ export default {
             data.research_title,
             data.research_type,
             data.leader,
+            data.college,
             data.members,
             data.location,
             data.duration,

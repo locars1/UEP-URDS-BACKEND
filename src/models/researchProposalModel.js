@@ -7,6 +7,7 @@ this.research_id = data.research_id;
 this.research_title = data.research_title;
 this.research_type = data.research_type;
 this.leader = data.leader;
+this.college = data.college;
 this.members = data.members;
 this.location = data.location;
 this.duration = data.duration;
