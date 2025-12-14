@@ -5,14 +5,14 @@ export const userRepository = {
   /* ---------------------------------------------------------
       FIND USER BY username
   --------------------------------------------------------- */
-  async findByEmail(email) {
+  async findByUsername(username) {
     const [rows] = await db.query(
       `SELECT u.*, r.role_name, c.college_name
        FROM user u
        LEFT JOIN role r ON u.roleID = r.roleID
        LEFT JOIN college c ON u.collegeID = c.collegeID
        WHERE u.username = ?`,
-      [email]
+      [username]
     );
     return rows[0];
   },

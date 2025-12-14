@@ -2,19 +2,23 @@
 import bcrypt from "bcrypt";
 import { userRepository } from "../repositories/userRepository.js";
 import { generateToken } from "../utils/jwt.js";
+import { authRepository } from "../repositories/authRepository.js";
 
 export const authService = {
+
   /* ---------------------------------------------------------
       LOGIN FUNCTION
   --------------------------------------------------------- */
-  async login(email, password) {
-    // 1. Find user by email
-    const user = await userRepository.findByEmail(email);
+  async login(username, password) {
+    // 1. Find user by username
+    const user = await userRepository.findByUsername(username);
     if (!user) return { success: false, message: "User not found." };
 
-    // 2. Verify password (hashed)
+    // 2. Verify password
     const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return { success: false, message: "Invalid password." };
+    if (!validPassword) {
+      return { success: false, message: "Invalid password." };
+    }
 
     // 3. Optional: restrict login to certain roles
     const allowedRoles = [
@@ -30,15 +34,15 @@ export const authService = {
       return { success: false, message: "Role not allowed to login." };
     }
 
-    // 4. Generate JWT including role info
+    // 4. Generate JWT
     const token = generateToken({
       userID: user.userID,
       roleID: user.roleID,
       role_name: user.role_name,
-      email: user.email
+      username: user.username
     });
 
-    // 5. Return user info and token
+    // 5. Return response
     return {
       success: true,
       message: "Login successful",
@@ -49,8 +53,37 @@ export const authService = {
         role_name: user.role_name,
         fname: user.fname,
         lname: user.lname,
-        email: user.email
+        username: user.username
       }
     };
+  },
+
+  /* ---------------------------------------------------------
+      REGISTER FUNCTION
+  --------------------------------------------------------- */
+ async register({ collegeID, fname, mname, lname, username, password }) {
+  // 1. Check if username exists
+  const existingUser = await authRepository.findByUsername(username);
+  if (existingUser) {
+    return { success: false, message: "Username already exists" };
   }
+
+  // 2. Hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // 3. Create user with roleID = 5
+  await authRepository.createUser({
+    collegeID,
+    fname,
+    mname,
+    lname,
+    username,
+    password: hashedPassword,
+    status: "active",
+    roleID: 5 // automatically assign role 5
+  });
+
+  return { success: true, message: "User registered successfully" };
+}
+
 };

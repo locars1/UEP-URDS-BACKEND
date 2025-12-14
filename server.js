@@ -2,6 +2,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+
+
 
 // Import Routes
 import authRoutes from "./src/routes/authRoutes.js"
@@ -24,6 +27,7 @@ import submissionRoutes from "./src/routes/submissionRoutes.js";
 import submissionEvaluationRoutes from "./src/routes/submissionEvaluationRoutes.js";
 import approvalNotificationRoutes from "./src/routes/approvalNotificationRoutes.js";
 
+
 // Import Middleware
 import { authenticate } from "./src/middleware/authMiddleware.js";
 
@@ -33,6 +37,7 @@ dotenv.config();
 
 const app = express();
 
+
 // Middlewares
 app.use(cors());
 app.use(express.json()); // Parse JSON bodies
@@ -41,6 +46,8 @@ app.use(express.json()); // Parse JSON bodies
 app.get("/urds", (req, res) => {
   res.send("URDS Backend API is running");
 });
+
+app.use(cookieParser());
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -63,6 +70,7 @@ app.use("/api/submissions", submissionRoutes);
 app.use("/api/evaluations", submissionEvaluationRoutes);
 app.use("/api/approval-notifications", approvalNotificationRoutes);
 app.use('/api/personal-services', personalServicesRoutes);
+
 
 
 
