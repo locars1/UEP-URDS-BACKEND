@@ -1,4 +1,3 @@
-// src/services/submissionService.js
 import SubmissionRepository from "../repositories/submissionRepository.js";
 
 export default {
@@ -16,5 +15,9 @@ export default {
     },
     delete(id) {
         return SubmissionRepository.deleteSubmission(id);
+    },
+    // NEW: get submissions filtered by college
+    getByCollege(collegeName) {
+        return SubmissionRepository.getSubmissionsByCollege(collegeName);
     }
 };

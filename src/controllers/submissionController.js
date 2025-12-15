@@ -1,4 +1,3 @@
-// src/controllers/submissionController.js
 import SubmissionService from "../services/submissionService.js";
 
 export default {
@@ -45,5 +44,20 @@ export default {
         } catch (err) {
             res.status(500).json({ error: err.message });
         }
+    },
+
+    // NEW: fetch submissions filtered by college
+    async getByCollege(req, res) {
+    try {
+        const collegeName = req.query.college;
+        if (!collegeName) {
+            return res.status(400).json({ message: "College name is required" });
+        }
+
+        const submissions = await SubmissionService.getByCollege(collegeName);
+        res.json(submissions);  // <- this should return JSON
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
+}
 };

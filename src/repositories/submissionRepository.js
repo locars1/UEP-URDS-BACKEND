@@ -102,7 +102,8 @@ export default {
             SELECT s.*,
              r.research_title,
               r.research_type,
-              r.leader
+              r.leader,
+              r.college
             FROM submission s
             JOIN research_proposal r ON s.research_id = r.research_id
             ORDER BY s.submission_id DESC
@@ -140,5 +141,21 @@ export default {
     deleteSubmission(id) {
         const sql = "DELETE FROM submission WHERE submission_id = ?";
         return db.query(sql, [id]);
-    }
+    },
+
+    getSubmissionsByCollege(collegeName) {
+    const sql = `
+        SELECT s.*,
+               r.research_title,
+               r.research_type,
+               r.leader,
+               r.college
+        FROM submission s
+        JOIN research_proposal r ON s.research_id = r.research_id
+        WHERE r.college LIKE ?
+        ORDER BY s.submission_id DESC
+    `;
+    return db.query(sql, [`%${collegeName}%`]).then(([rows]) => rows);
+}
 };
+
