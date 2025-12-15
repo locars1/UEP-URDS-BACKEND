@@ -55,7 +55,7 @@ app.use("/api/users",  userRoutes); // protected routes = app.use("/api/users", 
 app.use("/api/roles", authenticate, roleRoutes); // protected routes
 app.use("/api/colleges", authenticate, collegeRoutes); // protected routes
 
-app.use("/api/announcements", announcementRoutes);
+app.use("/api/announcements", authenticate, announcementRoutes);
 app.use("/api/research-proposal", researchProposalRoutes);
 app.use("/api/budget-summary", budgetSummaryRoutes);
 app.use("/api/mooe-travel", mooeTravelRoutes);
@@ -86,7 +86,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);

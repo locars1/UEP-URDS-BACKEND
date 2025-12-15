@@ -84,7 +84,54 @@ const AnnouncementRepository = {
         const query = `DELETE FROM announcements WHERE announcement_id = ?`;
         const [result] = await db.query(query, [id]);
         return result;
+    },
+
+    getAnnouncementsByRole: async (roleName) => {
+    const query = `
+        SELECT 
+            a.*,
+            u.fname,
+            u.lname,
+            r.role_name
+        FROM announcements a
+        JOIN user u ON a.user_id = u.userID
+        JOIN role r ON u.roleID = r.roleID
+        WHERE r.role_name = ?
+          AND a.status = 'active'
+        ORDER BY a.timestamp DESC
+    `;
+
+    try {
+        const [rows] = await db.query(query, [roleName]);
+        return rows;
+    } catch (err) {
+        console.error("🔥 MYSQL ERROR (ANNOUNCEMENT REPOSITORY - GET BY ROLE)");
+        console.error("Query:", query);
+        console.error("Role:", roleName);
+        console.error("Error:", err);
+        throw err;
     }
+},
+
+getAnnouncementsByRoleId: async (roleID) => {
+    const query = `
+        SELECT 
+            a.*,
+            u.fname,
+            u.lname,
+            r.role_name
+        FROM announcements a
+        JOIN \`user\` u ON a.user_id = u.userID
+        JOIN \`role\` r ON u.roleID = r.roleID
+        WHERE u.roleID = ?
+          AND a.status = 'active'
+        ORDER BY a.timestamp DESC
+    `;
+
+    const [rows] = await db.query(query, [roleID]);
+    return rows;
+},
+
 };
 
 export default AnnouncementRepository;

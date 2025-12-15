@@ -1,19 +1,32 @@
 import AnnouncementService from "../services/announcementService.js";
 
 const AnnouncementController = {
-   createAnnouncement: async (req, res) => {
-    console.log("📥 RECEIVED BODY:", req.body); // 🔥 Add this
+  createAnnouncement: async (req, res) => {
+    console.log("📥 RECEIVED BODY:", req.body); // debug
     try {
-        const newId = await AnnouncementService.createAnnouncement(req.body);
+        // ✅ Use logged-in user's ID and roleID from auth middleware
+        const userId = req.user.userID;
+        const roleID = req.user.roleID; // integer roleID
+
+        const data = {
+            ...req.body,
+            user_id: userId,
+            status: 'active',   // default
+            action: 'created'   // default
+        };
+
+        // Create announcement
+        const newId = await AnnouncementService.createAnnouncement(data);
+
         res.status(201).json({
             message: "Announcement created successfully",
-            announcement_id: newId
+            announcement_id: newId,
+            created_by_roleID: roleID // include roleID for reference
         });
     } catch (error) {
         console.error("🔥 CREATE ANNOUNCEMENT ERROR (CONTROLLER):", error);
         res.status(500).json({ error: "Failed to create announcement" });
         console.log("📥 RECEIVED BODY:", req.body);
-
     }
 },
    getAllAnnouncements: async (req, res) => {
@@ -57,7 +70,38 @@ const AnnouncementController = {
         } catch (error) {
             res.status(500).json({ error: "Failed to delete announcement" });
         }
+    },
+
+    getAnnouncementsByRole: async (req, res) => {
+        try {
+            const { role } = req.params;
+
+            const announcements =
+                await AnnouncementService.getAnnouncementsByRole(role);
+
+            res.status(200).json(announcements);
+        } catch (error) {
+            console.error("ANNOUNCEMENT FETCH BY ROLE ERROR:", error);
+            res.status(500).json({
+                error: "Failed to fetch announcements by role"
+            });
+        }
+   },
+   getAnnouncementsByRoleId: async (req, res) => {
+    try {
+        const { roleID } = req.params;
+
+        const announcements =
+            await AnnouncementService.getAnnouncementsByRoleId(roleID);
+
+        res.status(200).json(announcements);
+    } catch (error) {
+        console.error("ANNOUNCEMENT FETCH BY ROLE ID ERROR:", error);
+        res.status(500).json({
+            error: "Failed to fetch announcements by role ID"
+        });
     }
+}
 };
 
 export default AnnouncementController;

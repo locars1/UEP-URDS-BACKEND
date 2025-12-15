@@ -1,29 +1,27 @@
-// middleware/role.middleware.js
-
-// List all roles for easy reference
-export const Roles = {
-  URDS_DIRECTOR: "URDS DIRECTOR",
-  COLLEGE_DEAN: "COLLEGE DEAN",
-  SENIOR_FACULTY_RESEARCHER: "SENIOR FACULTY RESEARCHER",
-  RESEARCH_COORDINATOR: "RESEARCH COORDINATOR",
-  FACULTY_RESEARCHER: "FACULTY RESEARCHER",
-  EVALUATOR: "EVALUATOR",
-  ADMIN: "ADMIN"
+// List all roles with their roleID for reference
+export const RoleIDs = {
+  URDS_DIRECTOR: 1,
+  COLLEGE_DEAN: 2,
+  SENIOR_FACULTY_RESEARCHER: 3,
+  RESEARCH_COORDINATOR: 4,
+  FACULTY_RESEARCHER: 5,
+  EVALUATOR: 6,
+  ADMIN: 7
 };
 
 /**
- * Middleware to authorize based on allowed roles
- * @param  {...string} allowedRoles - list of role names that can access the route
+ * Middleware to authorize based on allowed roleIDs
+ * @param  {...number} allowedRoleIDs - list of role IDs allowed
  */
-export const authorize = (...allowedRoles) => {
+export const authorizeByRoleID = (...allowedRoleIDs) => {
   return (req, res, next) => {
-    if (!req.user || !req.user.role_name) {
+    if (!req.user || typeof req.user.roleID !== "number") {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const userRole = req.user.role_name;
+    const userRoleID = req.user.roleID;
 
-    if (!allowedRoles.includes(userRole)) {
+    if (!allowedRoleIDs.includes(userRoleID)) {
       return res.status(403).json({ message: "Forbidden - Access denied" });
     }
 

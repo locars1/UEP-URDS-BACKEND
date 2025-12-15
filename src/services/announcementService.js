@@ -19,7 +19,14 @@ const AnnouncementService = {
 
     deleteAnnouncement: async (id) => {
         return await AnnouncementRepository.deleteAnnouncement(id);
-    }
+    },
+
+    getAnnouncementsByRole: async (roleName) => {
+        return await AnnouncementRepository.getAnnouncementsByRole(roleName);
+    },
+    getAnnouncementsByRoleId: async (roleID) => {
+    return await AnnouncementRepository.getAnnouncementsByRoleId(roleID);
+},
 };
 
 export default AnnouncementService;
